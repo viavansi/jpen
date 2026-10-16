@@ -236,11 +236,8 @@ along with jpen.  If not, see <http://www.gnu.org/licenses/>.
       <id>osx</id>
       <activation>
         <os>
-          <name>mac os x</name>          
+          <family>mac</family>
         </os>
-        <file>
-            <exists>/System/Library/Frameworks/JavaVM.framework/Versions/Current/Headers/</exists>
-        </file>    
       </activation>
       <properties>
         <source.dir>src/main/c/osx</source.dir>
@@ -253,24 +250,30 @@ along with jpen.  If not, see <http://www.gnu.org/licenses/>.
                   <configuration>
                       <output>jpen-${module.version}-${jpen.provider.osx.nativeVersion}</output>
                       <c>
-                          <name>gcc</name>
+                          <name>clang</name>
                           <options>
-                              <option>-mmacosx-version-min=10.9</option>
+                              <!-- Universal binary: clang auto-promotes the arm64 slice min to 11.0 -->
+                              <option>-mmacosx-version-min=10.13</option>
                               <option>-arch</option>
                               <option>x86_64</option>
+                              <option>-arch</option>
+                              <option>arm64</option>
+                              <option>-I${env.JAVA_HOME}/include</option>
+                              <option>-I${env.JAVA_HOME}/include/darwin</option>
                           </options>
                       </c>
                       <linker>
+                          <name>clang</name>
                           <options>
-                              <option>-mmacosx-version-min=10.9</option>
+                              <option>-mmacosx-version-min=10.13</option>
                               <option>-arch</option>
                               <option>x86_64</option>
+                              <option>-arch</option>
+                              <option>arm64</option>
                               <option>-framework</option>
                               <option>Cocoa</option>
                               <option>-framework</option>
                               <option>Carbon</option>
-                              <option>-framework</option>
-                              <option>JavaVM</option>
                           </options>
                       </linker>
                   </configuration>
