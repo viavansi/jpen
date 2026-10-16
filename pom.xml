@@ -176,6 +176,14 @@ along with jpen.  If not, see <http://www.gnu.org/licenses/>.
                 </sysLibs>
               </linker>
             </configuration>
+            <executions>
+              <!-- javah was removed from the JDK after version 9; JNI headers under
+                   src/main/c/ are hand-maintained (regenerate with `javac -h` if needed) -->
+              <execution>
+                <id>default-nar-javah</id>
+                <phase>none</phase>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
